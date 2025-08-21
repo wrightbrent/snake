@@ -1,6 +1,7 @@
-// Get the canvas and context
+// Get the canvas, context, and score display
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
+const scoreDisplay = document.getElementById('score');
 // Size of each grid cell
 const grid = 20;
 // Frame count for controlling speed
@@ -51,14 +52,24 @@ function gameLoop() {
   // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Calculate new head position
-  let head = {x: snake[0].x + dx, y: snake[0].y + dy};
+  // Calculate new head position and wrap around edges
+  let head = {
+    x: snake[0].x + dx,
+    y: snake[0].y + dy
+  };
+  // Wrap horizontally
+  if (head.x < 0) head.x = canvas.width - grid;
+  if (head.x >= canvas.width) head.x = 0;
+  // Wrap vertically
+  if (head.y < 0) head.y = canvas.height - grid;
+  if (head.y >= canvas.height) head.y = 0;
   // Add new head to the front of the snake
   snake.unshift(head);
 
   // Check if snake eats the food
   if (head.x === food.x && head.y === food.y) {
     score++;
+    if (scoreDisplay) scoreDisplay.textContent = 'Score: ' + score;
     resetFood(); // Place new food
   } else {
     // Remove the tail if no food eaten
@@ -66,10 +77,8 @@ function gameLoop() {
   }
 
 
-  // Check for collision with walls, self, or obstacles
+  // Check for collision with self or obstacles (no wall collision)
   if (
-    head.x < 0 || head.x >= canvas.width ||
-    head.y < 0 || head.y >= canvas.height ||
     // Check if head collides with any body segment
     snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y) ||
     // Check if head collides with any obstacle
@@ -81,6 +90,7 @@ function gameLoop() {
     dx = grid;
     dy = 0;
     score = 0;
+    if (scoreDisplay) scoreDisplay.textContent = 'Score: 0';
     resetFood();
     return;
   }

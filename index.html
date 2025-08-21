@@ -12,15 +12,17 @@
         box-sizing: border-box;
       }
       body {
-        text-align: center;
-        font-family: sans-serif;
+  text-align: center;
+  font-family: sans-serif;
+  background: #111;
       }
     </style>
   </head>
   <body>
-    <h1>Classic Snake Game</h1>
+  <h1>Classic Snake Game</h1>
+  <div id="score" style="font-size: 1.5em; margin-bottom: 10px; color: #fff;">Score: 0</div>
   <canvas id="game" width="800" height="800" tabindex="0"></canvas>
-    <p>Use arrow keys to control the snake.</p>
-    <script src="snake.js"></script>
+  <p>Use arrow keys to control the snake.</p>
+  <script src="snake.js"></script>
   </body>
 </html>
