@@ -45,8 +45,8 @@ function resetFood() {
 function gameLoop() {
   // Schedule next frame
   requestAnimationFrame(gameLoop);
-  // Slow down the game loop (run every 4th frame)
-  if (++count < 4) return;
+  // Slow down the game loop (run every 8th frame for 50% slower speed)
+  if (++count < 8) return;
   count = 0;
   // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
